@@ -3,6 +3,8 @@ package com.example.administrator.myapplication;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.example.administrator.myapplication.presenter.BasePresenter;
@@ -18,10 +20,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends BaseActivity {
+    WebView mContentWv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContentWv = findViewById(R.id.wv_content);
+        WebSettings webSettings = mContentWv.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        JsInterface jsInterface = new JsInterface(MainActivity.this);
+        mContentWv.loadUrl("file:///android_asset/test.html");
+        mContentWv.addJavascriptInterface(jsInterface,"jsInterface");
 //        testView = findViewById(R.id.test);
 
 //        Observable.intervalRange(0, 11, 0, 1, TimeUnit.SECONDS)
