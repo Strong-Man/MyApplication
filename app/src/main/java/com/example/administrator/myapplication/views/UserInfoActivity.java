@@ -36,6 +36,11 @@ public class UserInfoActivity extends BaseActivity implements UserInfoContract.V
     }
 
     @Override
+    public int getContentLayoutID() {
+        return 0;
+    }
+
+    @Override
     public void showUserInfo(UserInfoModel userInfoModel) {
 
     }
