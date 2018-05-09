@@ -15,7 +15,7 @@ public class NetConstant {
 
         } else {
 
-            BASE_URL = BuildConfig.HTTP_RELEAS_BASE_URL;
+            BASE_URL = BuildConfig.HTTP_RELEASE_BASE_URL;
         }
     }
 }
