@@ -1,68 +1,87 @@
 package com.example.administrator.myapplication;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.myapplication.presenter.BasePresenter;
 import com.example.administrator.myapplication.views.BaseActivity;
-
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import com.example.administrator.myapplication.wxapi.OnResponseListener;
+import com.example.administrator.myapplication.wxapi.WXEntryActivity;
+import com.example.administrator.myapplication.wxapi.WXShare;
 
 public class MainActivity extends BaseActivity {
     WebView mContentWv;
+    Button mTestBtn;
+    WXShare wxShare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+
+
+
+        mTestBtn = findViewById(R.id.bt_test);
+        mTestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                wxShare.share("这是要分享的文字");
+            }
+        });
+
+
+
         mContentWv = findViewById(R.id.wv_content);
         WebSettings webSettings = mContentWv.getSettings();
         webSettings.setJavaScriptEnabled(true);
         JsInterface jsInterface = new JsInterface(MainActivity.this);
         mContentWv.loadUrl("file:///android_asset/test.html");
-        mContentWv.addJavascriptInterface(jsInterface,"jsInterface");
-//        testView = findViewById(R.id.test);
+        mContentWv.addJavascriptInterface(jsInterface, "jsInterface");
 
-//        Observable.intervalRange(0, 11, 0, 1, TimeUnit.SECONDS)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<Long>() {
-//                    private Disposable mDisposable;
-//
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//                        mDisposable = d;
-//                    }
-//
-//                    @Override
-//                    public void onNext(Long value) {
-////                         if(value == 60){
-////                             mDisposable.dispose();
-////                             return;
-////                         }
-//                        Log.d(TAG, "onNext");
-//                        testView.setText(String.valueOf(10 - value));
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        testView.setText("倒计时完毕");
-//                    }
-//                });
+
+
+        wxShare = new WXShare(this);
+        wxShare.setListener(new OnResponseListener() {
+            @Override
+            public void onSuccess() {
+                Toast.makeText(MainActivity.this,"wo huidiaochenggongle(Main)",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onFail(String message) {
+
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        wxShare.register();
+        super.onStart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        wxShare.unregister();
+        super.onDestroy();
     }
 
     @Override
