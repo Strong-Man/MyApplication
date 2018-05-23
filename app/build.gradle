@@ -9,7 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "HTTP_DEBUG_BASE_URL", "\"http:8180\""
+        buildConfigField "String", "HTTP_DEBUG_BASE_URL", "\"http://120.119.110.77:8080\""
         buildConfigField "String", "HTTP_RELEASE_BASE_URL", "\"http:8181\""
     }
     buildTypes {

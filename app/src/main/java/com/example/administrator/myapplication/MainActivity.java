@@ -1,22 +1,15 @@
 package com.example.administrator.myapplication;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.administrator.myapplication.presenter.BasePresenter;
-import com.example.administrator.myapplication.views.BaseActivity;
+import com.example.administrator.myapplication.mvp.presenter.IPresenter;
+import com.example.administrator.myapplication.mvp.views.BaseActivity;
 import com.example.administrator.myapplication.wxapi.OnResponseListener;
-import com.example.administrator.myapplication.wxapi.WXEntryActivity;
 import com.example.administrator.myapplication.wxapi.WXShare;
 
 public class MainActivity extends BaseActivity {
@@ -85,7 +78,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    public BasePresenter setPresenter() {
+    public IPresenter setPresenter() {
         return null;
     }
 
